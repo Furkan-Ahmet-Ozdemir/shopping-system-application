@@ -1,6 +1,8 @@
 package org.example.model;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +17,15 @@ public class Customer {
     private String phoneNumber;
     private Boolean isActive;
 
+    private LocalDate createdDate;
+
     private int age;
     private List<Order> orderList = new ArrayList<>();
 
     private Customer(){
 
     }
+
 
     public Customer(String name, String surname, String email, String password,int age){
         this.name = name;
@@ -29,6 +34,7 @@ public class Customer {
         this.password = password;
         this.isActive = true;
         this.age = age;
+        this.createdDate=LocalDate.now();
     }
 
     public Customer(String name, String surname, String email, String password, Integer credit,
@@ -41,6 +47,15 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.orderList = orderList;
         this.isActive = true;
+        this.createdDate=LocalDate.now();
+    }
+
+    public LocalDate getCreatedDate(){
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate){
+        this.createdDate = createdDate;
     }
 
     public int getAge(){

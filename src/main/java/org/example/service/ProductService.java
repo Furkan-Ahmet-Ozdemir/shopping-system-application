@@ -5,7 +5,7 @@ import org.example.repository.ProductRepository;
 import java.util.Set;
 
 public class ProductService {
-    private ProductRepository productRepository = new ProductRepository();
+    private final ProductRepository productRepository = new ProductRepository();
 
 
     public void save( Product product) {

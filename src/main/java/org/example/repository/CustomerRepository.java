@@ -20,6 +20,4 @@ public class CustomerRepository {
         return customerList;
     }
 
-
-
 }

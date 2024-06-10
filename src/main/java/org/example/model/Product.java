@@ -22,6 +22,14 @@ public class Product {
         this.stock = stock;
     }
 
+    public String getCategory(){
+        return category;
+    }
+
+    public void setCategory(String category){
+        this.category = category;
+    }
+
     public BigDecimal getAmount(){
         return amount;
     }

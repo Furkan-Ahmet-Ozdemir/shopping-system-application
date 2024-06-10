@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class CustomerService {
 
-    private CustomerRepository customerRepository = new CustomerRepository();
+    private final CustomerRepository customerRepository = new CustomerRepository();
 
     public void save(String name, String surname, String email, String password, int age) {
 

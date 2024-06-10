@@ -10,6 +10,7 @@ import org.example.model.Product;
 import org.example.repository.OrderRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -18,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class OrderService {
 
-    CustomerService customerService  = new CustomerService();
-    OrderRepository orderRepository = new OrderRepository();
+    private final CustomerService customerService  = new CustomerService();
+    private final OrderRepository orderRepository = new OrderRepository();
 
     public List<Order> getOrderList() {
         return orderRepository.getOrderList();
@@ -27,30 +28,29 @@ public class OrderService {
 
 
     public void save(Set<Product> productSet, Customer customer){
-        Order order = new Order(productSet, generateOrderCode()); // hash olarak tutulsun.
+        Order order = new Order(productSet, generateOrderCode());
 
         customer.getOrderList().add(order);
 
         orderRepository.save(order);
 
-        BigDecimal earnedPoints = productSet.stream()
+        BigDecimal total = productSet.stream()
                 .map(Product::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        System.out.println("total: " + earnedPoints);
+        System.out.println("total: " + total);
 
-        order.setInvoice(new Invoice(earnedPoints));
+        order.setInvoice(new Invoice(total));
         System.out.println(  order.getInvoice().toString());
     }
 
-    private String generateOrderCode() {
-        Random random = new Random();
+    private String generateOrderCode(){
+        LocalTime localTime = LocalTime.now();
         String orderNumber;
         boolean isExistingNumber;
 
         do {
-            int number = random.nextInt(999) + 10000000;  // 100 ile 999 arasında rastgele bir sayı oluşturur
-            orderNumber = "KY" + number;
+            orderNumber = "KY" + localTime.getHour()*10 + localTime.getMinute()*9 + localTime.getSecond()*8 ;
 
             String finalOrderNumber = orderNumber;
             isExistingNumber = customerService.getCustomerList().stream()
